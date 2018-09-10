@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(ApiConstant.API_V_1 + "/trips")
@@ -31,11 +32,11 @@ public class TripsController {
 
     @GetMapping
     public ResponseEntity<List<TripDto>> findAll() {
-        return new ResponseEntity<>(tripService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>((List<TripDto>) tripService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TripDto> findById(@PathVariable("id") final Long id) {
+    public ResponseEntity<Optional<TripDto>> findById(@PathVariable("id") final Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8");
         return ResponseEntity.ok()
